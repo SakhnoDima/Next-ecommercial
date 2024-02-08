@@ -22,7 +22,7 @@ model Product {
 
 model Card {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  iems      CardItem[]
+  items     CardItem[]
   createdAt DateTime   @default(now())
   updaredAt DateTime   @updatedAt
 
@@ -33,7 +33,7 @@ model CardItem {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   productId String  @db.ObjectId
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  quantaty  Int
+  quantity  Int
   cardId    String  @db.ObjectId
   cart      Card    @relation(fields: [cardId], references: [id])
 
