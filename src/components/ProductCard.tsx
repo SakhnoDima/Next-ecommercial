@@ -15,7 +15,7 @@ const ProductCard: FC<IProductCard> = ({ product }) => {
   return (
     <Link
       key={product.id}
-      href={"/products" + product.id}
+      href={"/products/" + product.id}
       className="card bg-base-100 w-full transition-shadow hover:shadow-xl"
     >
       <figure>

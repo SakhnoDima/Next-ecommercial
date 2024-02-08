@@ -1,6 +1,6 @@
 "use client";
 
-const errorPage = () => {
+const ErrorPage = () => {
   return (
     <div>
       <h3>Something went wrong, please refresh page!</h3>
@@ -8,4 +8,4 @@ const errorPage = () => {
   );
 };
 
-export default errorPage;
+export default ErrorPage;
