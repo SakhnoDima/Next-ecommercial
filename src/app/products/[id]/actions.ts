@@ -1,8 +1,8 @@
 "use server";
+import { revalidatePath } from "next/cache";
 
 import { createCard, getCard } from "@/lib/db/card";
 import { prisma } from "@/lib/db/prisma";
-import { revalidatePath } from "next/cache";
 
 export const incrementProductQuantity = async (productId: string) => {
   const card = (await getCard()) ?? (await createCard());
