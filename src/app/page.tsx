@@ -9,15 +9,13 @@ export default async function Home() {
   });
 
   return (
-    <main>
-      <div>
-        <Hero product={products[0]} />
-        <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {products.slice(1).map((el) => (
-            <ProductCard key={el.id} product={el} />
-          ))}
-        </div>
+    <>
+      <Hero product={products[0]} />
+      <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {products.slice(1).map((el) => (
+          <ProductCard key={el.id} product={el} />
+        ))}
       </div>
-    </main>
+    </>
   );
 }

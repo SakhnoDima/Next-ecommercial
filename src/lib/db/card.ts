@@ -7,8 +7,8 @@ export type CardWithProducts = Prisma.CardGetPayload<{
 }>;
 
 export type TShopingCard = CardWithProducts & {
-  size: Number;
-  subtotal: Number;
+  size: number;
+  subtotal: number;
 };
 
 export const createCard = async (): Promise<TShopingCard> => {
