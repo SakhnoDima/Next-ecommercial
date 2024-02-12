@@ -21,7 +21,7 @@ const Navbar: FC<{}> = async () => {
   const cart = await getCard();
 
   return (
-    <div className="bg-base-100">
+    <header className="bg-base-100">
       <div className="navbar m-auto max-w-7xl flex-col gap-2 sm:flex-row">
         <div className="flex-1">
           <Link href="/" className="btn btn-ghost text-xl normal-case">
@@ -43,7 +43,7 @@ const Navbar: FC<{}> = async () => {
           <ShoppingCartButton cart={cart} />
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

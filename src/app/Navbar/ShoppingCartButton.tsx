@@ -40,7 +40,7 @@ const ShoppingCartButton: FC<IShoppingCartButton> = ({ cart }) => {
           </span>
           <div className="card-actions">
             <Link
-              href="/"
+              href="/card"
               className="btn btn-primary btn-block"
               onClick={cartCloseDropdown}
             >

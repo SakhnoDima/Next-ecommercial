@@ -1,9 +1,13 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
-import { Card, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 export type CardWithProducts = Prisma.CardGetPayload<{
   include: { items: { include: { product: true } } };
+}>;
+
+export type CartItemWithProduct = Prisma.CardItemGetPayload<{
+  include: { product: true };
 }>;
 
 export type TShopingCard = CardWithProducts & {
