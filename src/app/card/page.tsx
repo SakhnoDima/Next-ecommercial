@@ -13,7 +13,7 @@ const CartPage = async () => {
   return (
     <div>
       <h1 className="mx-auto mb-[20px] text-3xl font-bold">Shopping cart</h1>
-      {!cart?.items.length && <p>You don't any products in your cart!</p>}
+      {!cart?.items.length && <p>You don`t any products in your cart!</p>}
       {cart?.items.map((cartItem) => (
         <CartItem
           key={cartItem.id}
