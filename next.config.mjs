@@ -11,6 +11,9 @@ const nextConfig = {
       {
         hostname: "content1.rozetka.com.ua",
       },
+      {
+        hostname: "lh3.googleusercontent.com",
+      },
     ],
   },
 };
