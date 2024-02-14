@@ -3,6 +3,8 @@ import { prisma } from "./prisma";
 import { Card, Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { tree } from "next/dist/build/templates/app-page";
+import { cartsMerger } from "../cartsMerger";
 
 export type CardWithProducts = Prisma.CardGetPayload<{
   include: { items: { include: { product: true } } };
@@ -73,4 +75,61 @@ export const getCard = async (): Promise<TShopingCard | null> => {
     size: card.items.reduce((acc, item) => acc + item.quantity, 0),
     subtotal: card.items.reduce((acc, item) => acc + item.product.price, 0),
   };
+};
+
+export const mergeAnonToUserCart = async (userId: string) => {
+  const localCardId = cookies().get("localCard")?.value;
+
+  const localCard = localCardId
+    ? await prisma.card.findUnique({
+        where: { id: localCardId },
+        include: { items: true },
+      })
+    : null;
+
+  if (!localCard) return;
+
+  const userCard = await prisma.card.findFirst({
+    where: { userId },
+    include: { items: true },
+  });
+
+  await prisma.$transaction(async (tx) => {
+    if (userCard) {
+      const mergedCartItems = cartsMerger(localCard.items, userCard.items);
+
+      await tx.cardItem.deleteMany({
+        where: {
+          cardId: userCard.id,
+        },
+      });
+      await tx.cardItem.createMany({
+        data: mergedCartItems.map((item) => ({
+          cardId: userCard.id,
+          productId: item.productId,
+          quantity: item.quantity,
+        })),
+      });
+    } else {
+      await tx.card.create({
+        data: {
+          userId,
+          items: {
+            createMany: {
+              data: localCard.items.map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity,
+              })),
+            },
+          },
+        },
+      });
+    }
+
+    await tx.card.delete({
+      where: { id: localCard.id },
+    });
+  });
+
+  cookies().set("localCardId", "");
 };
