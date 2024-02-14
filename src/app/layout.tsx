@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import SessionProvider from "./SessionProvider";
+
 import "./globals.css";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
@@ -19,9 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` flex min-h-[100vh] flex-col ${inter.className}`}>
-        <Navbar />
-        <main className="m-auto min-w-[300px] max-w-7xl p-4">{children}</main>
-        <Footer />
+        <SessionProvider>
+          <Navbar />
+          <main className="m-auto min-w-[300px] max-w-7xl p-4">{children}</main>
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );
