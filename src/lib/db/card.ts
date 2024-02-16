@@ -102,12 +102,21 @@ export const mergeAnonToUserCart = async (userId: string) => {
           cardId: userCard.id,
         },
       });
-      await tx.cardItem.createMany({
-        data: mergedCartItems.map((item) => ({
-          cardId: userCard.id,
-          productId: item.productId,
-          quantity: item.quantity,
-        })),
+
+      await tx.card.update({
+        where: {
+          id: userCard.id,
+        },
+        data: {
+          items: {
+            createMany: {
+              data: mergedCartItems.map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity,
+              })),
+            },
+          },
+        },
       });
     } else {
       await tx.card.create({

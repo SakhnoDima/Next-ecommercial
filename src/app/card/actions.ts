@@ -13,28 +13,40 @@ export const seProductQuantity = async (
 
   if (quantity === 0) {
     if (articleInCard) {
-      await prisma.cardItem.delete({
+      await prisma.card.update({
         where: {
-          id: articleInCard?.id,
+          id: card.id,
+        },
+        data: {
+          items: {
+            delete: { id: articleInCard.id },
+          },
         },
       });
     }
   } else {
     if (articleInCard) {
-      await prisma.cardItem.update({
-        where: {
-          id: articleInCard.id,
-        },
+      await prisma.card.update({
+        where: { id: card.id },
         data: {
-          quantity,
+          items: {
+            update: {
+              where: { id: articleInCard.id },
+              data: { quantity },
+            },
+          },
         },
       });
     } else {
-      await prisma.cardItem.create({
+      await prisma.card.update({
+        where: { id: card.id },
         data: {
-          cardId: card.id,
-          productId,
-          quantity,
+          items: {
+            create: {
+              productId,
+              quantity,
+            },
+          },
         },
       });
     }

@@ -10,16 +10,29 @@ export const incrementProductQuantity = async (productId: string) => {
   const articleInCard = card.items.find((el) => el.productId === productId);
 
   if (articleInCard) {
-    await prisma.cardItem.update({
-      where: { id: articleInCard.id },
-      data: { quantity: { increment: 1 } },
+    await prisma.card.update({
+      where: { id: card.id },
+      data: {
+        items: {
+          update: {
+            where: { id: articleInCard.id },
+            data: { quantity: { increment: 1 } },
+          },
+        },
+      },
     });
   } else {
-    await prisma.cardItem.create({
+    await prisma.card.update({
+      where: {
+        id: card.id,
+      },
       data: {
-        cardId: card.id,
-        productId,
-        quantity: 1,
+        items: {
+          create: {
+            productId,
+            quantity: 1,
+          },
+        },
       },
     });
   }
