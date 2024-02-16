@@ -3,7 +3,6 @@ import { prisma } from "./prisma";
 import { Card, Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { tree } from "next/dist/build/templates/app-page";
 import { cartsMerger } from "../cartsMerger";
 
 export type CardWithProducts = Prisma.CardGetPayload<{
