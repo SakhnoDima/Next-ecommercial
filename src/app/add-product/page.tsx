@@ -2,7 +2,7 @@ import CustomButton from "@/components/CustomButton";
 import { prisma } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../api/auth/[...nextauth]/options";
 
 export const metadata = {
   title: "Add your product page",
